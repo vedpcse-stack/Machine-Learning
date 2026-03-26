@@ -1,0 +1,143 @@
+df.set_index(
+    keys : Column name(s) to set as index 
+    drop : Remove column after indexing (default True ) 
+    inplace : Modify original DataFrame 
+    verify_integrity : Check duplicate index values 
+    append : Add to existing index (MultiIndex)
+)
+
+
+df.head(
+    n = 10 --> first 10 rows
+) -> default first 5 rows
+
+
+df.tail(
+    n = 4 --> last 4 rows
+) -> default last 5 rows
+
+
+df.sample(
+    n = None, 
+    frac = None, --> don't use if n is given , frac in % like 0.5 means 50% rows
+    replace = False, --> if true then same row can appear multiple times
+    weights = None, --> Assigns probability weights to each row
+    random_state = None, --> same result every time
+    axis = None, --> 0 : rows  , 1 : columns -> return n random rows or columns
+    ignore_index = False , --> keep original index
+) --> n random sample 
+
+
+df.describe(
+    include=None, --> if value is "all" give table with all columns
+    exclude=None , --> remove any specific dataType,
+    percentiles = [] --> find which percentile to show
+)
+
+
+df["col_name"].unique() --> list of all unique values in that colomn
+
+df["col_name"].nunique() --> number of unique values in that colomn
+
+df["col_name].value_counts(
+    normalize : False , --> if true then give values in Percentage form like 0.333
+    ascending : False --> in ascending order of no. of values
+)
+
+
+df.isna() --> give table type formate if value if null then true , otherwise False
+df.isna().sum() --> number of null values in each columns
+df.isna().sum().sum() --> total null values in that DataFrame
+
+
+df.fillna(
+    value : Replace with value , (dict of values to fill , keys are col_name & values are values to fill)
+    method="ffill" Forward fill , or method="bfill" Backward fill
+    inplace=True Modify original,
+    axis = 0 (default) , --> if 0 : fill downward , 1 : fill sideways
+    limit = None --> max number of consecutive null values to fill
+)
+
+
+df.dropna(
+    axis = 0, --> drop row wise , default is 0 , 1 for column wise
+    how = 'any', or 'all' --> any : drop if any Null is there , all : all null values should be there
+    thresh = None, --> Keeps rows/columns that have at least thresh non-NaN values (Overrides how when specified)
+    subset = None, --> Check for NaN only in specific columns or rows (Takes a column label or list of labels)
+    inplace = False
+)
+
+
+df.drop(
+    labels=None, --> The row index labels or column names to drop
+    axis=0, --> if 0 : drop rows , 1 : drop columns
+    index=None, --> Shortcut to drop rows directly without specifying axis=0
+    columns=None, --> Shortcut to drop columns directly without specifying axis=1
+    level=None, --> Used with MultiIndex DataFrames
+    inplace=False, 
+    errors='raise' or 'ignore' ->  raises KeyError if label not found & if ignore then ignore missing labels
+)
+
+
+df.duplicated(
+    subset=None, --> Check duplicates based on specific columns only ,Default checks all columns
+    keep='first' or 'last' or 'False' , first : make all duplicate true except first , last : make all duplicate true except last , False : make all duplicate true,
+) --> returns a Boolean Series indicating whether each row is a duplicate or not.
+
+
+df.drop_duplicates(
+    subset=None, --> Drop duplicates based on specific columns only , Default checks all columns
+    keep='first' or 'last' or 'False' , first : drop except first , last : drop except last , False : drop all duplicates,
+    inplace=False, 
+    ignore_index=False 
+) --> removes duplicate rows from a DataFrame and returns a cleaned DataFrame.
+
+
+df.sort_values(
+    by, --> Column name or list of column names to sort by , must be parameter
+    axis=0, --> if 0 : sort rows by colomn wise , 1 : sort columns by row wise (this was give in by=value)
+    ascending=True, --> pass in list if there are multiple columns to sort
+    inplace=False, 
+    kind='quicksort', 'mergesort', 'heapsort' , 'stable' --> shorting algorithm to use
+    na_position='last', 'first' --> place Nan value at last or first
+    ignore_index=False, 
+    key=None
+)
+
+
+df.sort_index(
+    axis=0,  0 : sort by row index , 1 : sort by column labels
+    level=None, 
+    ascending=True, 
+    inplace=False,
+    kind='quicksort', 'mergesort', 'heapsort' , 'stable' --> shorting algorithm to use,
+    na_position='last', 
+    sort_remaining=True, --> Only applies to MultiIndex
+    ignore_index=False, 
+    key=None --> Applies a function to index values before sorting like : -> df.sort_index(key=lambda x: x.str.lower()) -> sort by case insensitively
+)
+
+
+df.mean(numeric_only=True)      # average of values
+df.median(numeric_only=True)    # middle value
+df.mode()      # most frequently occurring value
+df.std(numeric_only=True)       # standard deviation
+df.var(numeric_only=True)       # variance
+df.mad(numeric_only=True)       # mean absolute deviation
+df.sem(numeric_only=True)       # standard error of the mean
+df.min(numeric_only=True)       # minimum value
+df.max(numeric_only=True)       # maximum value
+df.idxmin()    # index of minimum value
+df.idxmax()    # index of maximum value
+df.sum(numeric_only=True)       # sum of values
+df.prod(numeric_only=True)      # product of all values
+df.cumsum(numeric_only=True)    # cumulative sum
+df.cumprod(numeric_only=True)   # cumulative product
+df.cummin(numeric_only=True)    # cumulative minimum
+df.cummax(numeric_only=True)    # cumulative maximum
+df.corr(numeric_only=True)         # correlation between all columns
+df.cov(numeric_only=True)          # covariance between all columns
+df.corrwith(df2)  # correlation with another DataFrame
+df.round(2)      # round to 2 decimal places
+df.abs()         # absolute value
+df.clip(0, 100)  # clip values between 0 and 100
