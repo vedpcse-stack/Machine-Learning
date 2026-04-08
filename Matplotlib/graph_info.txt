@@ -1,0 +1,145 @@
+import seaborn as sns
+
+sns.heatmap(
+    data, -->  2D dataset — DataFrame, numpy array, or matrix
+    vmin=None, --> Minimum and maximum values for color scale 
+    vmax=None, -> use with vmin
+    cmap=None, --> Colormap to use for coloring cells -> coolwarm , viridis , Blues , RdYlGn ,YlOrRd ,rocket
+    center=None, -> Value at which to center the colormap
+    robust=False, --> (default) → color scale uses vmin and vmax , 
+                        True → color scale uses robust quantiles (2nd and 98th percentile) — ignores outliers
+    annot=None, --> if true write data values inside each cell
+    fmt='', --> Format string for annotation values , Only used when annot=True -> fmt='.2f' --> 0.85
+                                                                                -> fmt='.0f' --> 1 (no decimal)
+                                                                                -> fmt='d' --> 42 (integers)
+                                                                                -> fmt='.1%' --> 85% (percentage)
+    annot_kws=None, -> Dictionary of text styling for annotations
+    linewidths=0, --> Width of lines between cells , Default is 0 (no lines)
+    linecolor='white', --> Color of lines between cells , Default is 'white'
+    cbar=True,--> True : (default) → show color bar legend
+    cbar_kws=None, --> Dictionary of keyword arguments for colorbar styling
+    cbar_ax=None, 
+    square=False, --> False : (default) → cells are rectangular , True :  forces cells to be perfectly square
+    xticklabels='auto', 
+    yticklabels='auto', 
+    mask=None,
+    ax=None, 
+    **kwargs
+)
+
+
+
+sns.boxplot(
+    x=None, --> Used for categorical data (horizontal grouping)
+    y=None, --> Used for numeric values
+    hue=None, --> Adds another grouping variable
+    data=None, --> Dataset (DataFrame)
+    order=None, --> Custom order of categories
+    hue_order=None, --> Order for hue categories
+    orient=None, --> Orientation of boxplot ,  'v' -> Vertical , 'h' -> horizontal
+    color=None, -> Single color for boxplot
+    palette=None, --> Multiple colors , (options) -> Set1 , Set2 , coolwarm , viridis
+    width=0.8, --> Width of box
+    dodge=True, -> Used with hue -> True : Separate boxes , False : Overlapping boxes
+    fliersize=5, --> Size of outliers
+    linewidth=None, --> Thickness of box border
+    whis=1.5(default) --> Controls whisker length (ex : whisker = Q1 - 1.5*IQR) , whis = 2
+)
+
+
+
+sns.scatterplot(
+    x=None, --> Values for x-axis
+    y=None, -> Values for y-axis
+    hue=None,  -> Adds color grouping
+    size=None, -> Controls size of points (ex : size="experience" ) , Bigger size = higher value
+    style=None, -> Different marker shapes (ex :  style="gender") shows like - circle , square , triangle
+    data=None, -> Dataset (DataFrame)
+    palette=None, --> Color theme
+    sizes=None, --> Custom size range (use with size) like sizes = (20,100)
+    markers=True, --> Custom markers (use with style)
+    legend="auto" or brief , full , False
+)
+
+
+px.bar(
+    x – column used for x-axis categories. 
+    y – column used for numerical values determining bar height. 
+    width – sets the figure width in pixels. 
+    height – sets the figure height in pixels. 
+    title – adds a title to the chart. 
+    color – separates bars using different colors based on a column. 
+    hover_data – displays additional columns when hovering over bars. 
+    pattern_shape – adds pattern styles (/, x, etc.) to bars based on category. 
+    barmode – controls bar layout such as group, stack, or relative. 
+    text_auto – automatically shows values on the bars. 
+    text – displays custom text labels from a column on bars. 
+    orientation – changes bar direction to vertical (v) or horizontal (h). 
+    color_discrete_map – assigns specific colors to particular category values.(dictionary) 
+    color_discrete_sequence – defines a list of colors used for bars.
+)
+
+
+px.scatter(
+    x – column used for x-axis values. 
+    y – column used for y-axis values. 
+    width – sets figure width in pixels. 
+    height – sets figure height in pixels. 
+    title – adds chart title. 
+    color – colors points based on categorical or numeric column (group scatter). 
+    size – controls marker size based on a column (bubble scatter).
+    symbol – uses different marker shapes for categories.
+    color_discrete_map – assigns specific colors to category values. 
+    color_discrete_sequence – provides list of colors used for points.  
+    facet_col – splits chart into multiple columns of subplots by category. 
+    facet_row – splits chart into multiple rows of subplots by category.
+)
+
+px.scatter_3d(
+    df – DataFrame containing the dataset. 
+    x – column for x-axis variable.
+    y – column for y-axis variable. 
+    z – column for z-axis variable (3rd dimension). 
+    color – colors points by category or numeric value. 
+    size – controls marker size based on a column. 
+    title – adds title to the 3D scatter plot.
+)
+
+
+px.line(
+    x="match_id",              
+    y="run",              
+    color="player",              
+    markers=True,              
+    hover_data=["ground", "ball"],              
+    color_discrete_map={ "Kohli": "blue","Rohit": "orange","Hardik": "green"},              
+    title="Multi-Line Chart: Player Runs Across Matches"
+)
+
+
+px.histogram(
+    df – DataFrame containing the dataset. 
+    x – column whose distribution is shown on the x-axis. 
+    y – optional column used for aggregation values when using histfunc. 
+    nbins – defines the number of bins (interval groups) in the histogram. 
+    color – separates bars by category using different colors. 
+    histfunc – aggregation function applied to y (e.g., count, sum, avg, min, max). 
+    pattern_shape – adds patterns to histogram bars based on category. 
+    text_auto – automatically displays values on bars. 
+    color_discrete_map – assigns specific colors to particular category values. color_discrete_sequence – defines a list of colors used in the histogram.
+)
+
+
+fig = px.pie(
+    data, --> DataFrame
+    values, --> Numerical values used for slice size
+    names, --> Category names
+    color_discrete_sequence, --> List of colors for slices
+    title
+)
+
+fig.update_traces( 
+    textinfo="percent+label", 
+    textposition="inside", 
+    pull=[0,0.1,0,0] 
+)

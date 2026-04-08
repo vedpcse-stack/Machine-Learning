@@ -19,7 +19,7 @@ df.tail(
 
 df.sample(
     n = None, 
-    frac = None, --> don't use if n is given , frac in % like 0.5 means 50% rows
+    frac = None, --> don't use if n is given(gives error) , frac in % like 0.5 means 50% rows
     replace = False, --> if true then same row can appear multiple times
     weights = None, --> Assigns probability weights to each row
     random_state = None, --> same result every time
@@ -64,6 +64,8 @@ df.dropna(
     how = 'any', or 'all' --> any : drop if any Null is there , all : all null values should be there
     thresh = None, --> Keeps rows/columns that have at least thresh non-NaN values (Overrides how when specified)
     subset = None, --> Check for NaN only in specific columns or rows (Takes a column label or list of labels)
+            --> if i pass df.fropna(subset=[1,2] , axis=1) -> then if any of value in index 1 or 2 is null so that colomn is drop 
+            --> but if if i write df.fropna(subset=[1,2] , axis=1 , how='all' ) then both index 1 & 2 's value need to null for droping that colomn
     inplace = False
 )
 
@@ -141,3 +143,129 @@ df.corrwith(df2)  # correlation with another DataFrame
 df.round(2)      # round to 2 decimal places
 df.abs()         # absolute value
 df.clip(0, 100)  # clip values between 0 and 100
+
+
+
+
+df.corr(
+    method='pearson', or 'kendall' or 'spearman'
+    min_periods=1, --> Minimum number of valid (non-NaN) observations required to compute correlation
+    numeric_only=False
+)
+
+
+
+pd.plotting.scatter_matrix(
+    df, 
+    alpha=0.5, --> Transparency 
+    figsize=(10,10), 
+    diagonal='hist', or 'kde' --> What to plot on the diagonal (where a column meets itself) or smooth density  curve (Kernel Density Estimate)
+
+    marker='o', -->  Shape of scatter points
+    density_kwds=None, --> Extra keyword arguments passed to the KDE plot on diagonal  
+                       --> density_kwds={'color': 'red', 'linewidth': 2}
+                       --> only work on diagonal = 'kde'
+    hist_kwds=None, --> Extra keyword arguments passed to the histogram on diagonal
+                    --> Only used when diagonal='hist'
+                    --> hist_kwds={'bins': 20, 'color': 'blue', 'edgecolor':'black'}
+    range_padding=0.05, -->  Adds extra space around the axis limits , 0.05 means 5% 
+    ax=None --> Pass an existing matplotlib axes object to plot into
+)
+
+
+
+pd.plotting.parallel_coordinates(
+    frame, 
+    class_column, --> Required — name of the column used to color/group the lines , must be categorical 
+    cols=None, --> List of specific columns to include in the plot , default : use all except class_column
+    ax=None, 
+    color=None, --> List of colors to use for each class , Must match the number of unique classes
+    use_columns=False, --> (default) → x-axis uses integer positions (0, 1, 2...) , true : show actual col name
+    xticks=None, --> Custom tick positions on x-axis
+    colormap=None, --> A matplotlib colormap name to auto-assign colors to classes
+    axvlines=True,  --> (default) → draws vertical lines at each axis
+    axvlines_kwds=None, --> Dictionary of styling options for the vertical axis lines
+    sort_labels=False, --> (default) → classes appear in original order
+    **kwargs
+)
+
+
+
+pd.crosstab(
+    index, columns, 
+    values=None, --> other value instade of counting , like df['salary'] , Must be used together with aggfunc
+    rownames=None, --> Custom names for row axes , like df['gender'] in index but rownames=['Gender']
+    colnames=None, --> Custom names for column axes
+    aggfunc=None, --> Can be 'mean', 'sum', 'count', 'min', 'max', or any callable , must be use with values
+    margins=False, --> (default) → no totals , True → adds row and column totals
+    margins_name='All', --> Name for the margins row/column , default is 'ALL' 
+    dropna=True, --> (default) → excludes columns with all NaN values , False : include col even if Nan exist
+    normalize=False --> Converts counts to proportions/percentages
+                    False (default) → raw counts
+                    True or 'all' → normalize over all values
+                    'index' → normalize over each row
+                    'columns' → normalize over each column
+)
+
+
+
+df.apply(
+    func, 
+    axis=0, --> 0 or 'index' (default) → apply function to each column
+                1 or 'columns' → apply function to each row
+    raw=False, --> False (default) → passes a Series to the function
+                   True → passes a numpy array to the function (faster for numeric ops)
+    result_type=None, 
+    args=(), 
+    **kwargs
+)
+
+
+df.groupby(
+    by=None,  --> Column name, list of columns, function, or dict to group by
+    axis=0, (index : default)
+    level=None, --> Used with MultiIndex , Specifies which index level to group by
+    as_index=True, --> (default) → group labels become the index of result , false :  group labels 
+                                    stay as regular columns (SQL-style)
+    sort=True, --> (default) → sort group keys , (false) : keeps groups in original order (slightly faster)
+    group_keys=True, --> (default) → adds group keys to index when using apply
+    squeeze=False, 
+    observed=False, --> Only applies to Categorical columns , False (default) → shows all categories even if empty
+    dropna=True --> (default) → excludes rows where group key is NaN
+)
+
+
+
+df.merge(
+    right, --> with which DataFrame you want to merge
+    how='inner', 'left' , 'right' , 'outer' , 'cross'
+    on=None, --> default : use all colomn , Column name(s) to join on
+    left_on=None, --> Used when column names differ between DataFrames , matches df1['emp_id'] with df2['id']
+    right_on=None, --> Used when column names differ between DataFrames , matches df1['emp_id'] with df2['id']
+    left_index=False, --> (default) → use columns for joining , True ->  use index instead of a column for joining
+    right_index=False, --> --> (default) → use rows for joining , True ->  use index instead of a column for joining
+    sort=False, --> True → sort result by join keys
+    suffixes=('_x', '_y'), --> Tuple of suffixes to add when both DataFrames have same column name
+    copy=True, 
+    indicator=False, --> True → adds _merge column showing source of each row
+    validate=None --> Checks the type of relationship between DataFrames 
+                  -->  'one_to_one' or '1:1' → both keys must be unique
+                        'one_to_many' or '1:m' → left key must be unique
+                        'many_to_one' or 'm:1' → right key must be unique
+                        'many_to_many' or 'm:m' → no uniqueness required
+)
+
+
+
+pd.concat(
+    objs, --> List or dict of DataFrames or Series to concatenate
+    axis=0, --> or 'index' (default) → stack vertically (add rows) , 1 or 'columns' → stack horizontally (add columns)
+    join='outer', 'inner' --> outer :(default) → keeps all columns from both, NaN where missing , inner :  keeps only common columns
+    ignore_index=False, --> (default) → keeps original index
+    keys=None, --> Creates a MultiIndex to identify which DataFrame each row came from
+    levels=None, 
+    names=None, 
+    verify_integrity=False, --> (default) → no check for duplicate index values , true : raises ValueError if duplicate indexes exist
+    sort=False, (default) → columns in original order
+    copy=True
+)
