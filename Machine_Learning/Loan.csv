@@ -1,0 +1,14 @@
+Age,Income,CreditScore,LoanAmount,Dependents,Education,SelfEmployed,PropertyArea,PreviousLoans,LoanApproved
+25,35000,620,120000,0,Graduate,No,Urban,1,No
+42,72000,780,200000,2,Graduate,No,Semiurban,0,Yes
+35,58000,690,150000,1,Graduate,Yes,Rural,2,Yes
+28,26000,590,100000,0,Not Graduate,No,Urban,1,No
+50,85000,810,250000,3,Graduate,No,Semiurban,0,Yes
+31,46000,640,130000,1,Graduate,Yes,Rural,1,No
+39,67000,730,180000,2,Graduate,No,Urban,0,Yes
+29,31000,610,110000,0,Not Graduate,No,Rural,2,No
+45,79000,800,230000,2,Graduate,No,Semiurban,0,Yes
+33,52000,675,145000,1,Graduate,Yes,Urban,1,Yes
+36,,710,170000,2,Graduate,No,Urban,0,Yes
+42,72000,780,200000,2,Graduate,No,Semiurban,0,Yes
+27,28000,600,,0,Not Graduate,No,Rural,1,No
